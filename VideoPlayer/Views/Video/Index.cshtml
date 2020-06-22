@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<script>
+    const hubConnection = new signalR.HubConnectionBuilder().withUrl("/bot").build();
+    hubConnection.on("ReceiveMessage", function (sender, data) {
+
+        let elem = document.createElement("p");
+        elem.appendChild(document.createTextNode(data));
+        let firstElem = document.getElementById("chatroom").firstChild;
+        document.getElementById("chatroom").insertBefore(elem, firstElem);
+
+        alert(data);
+    });
+    hubConnection.start();
+</script>
+<h1>Index:</h1>
+<br>
+<div id="chatroom"></div>
